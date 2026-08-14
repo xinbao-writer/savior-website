@@ -1,65 +1,743 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>《被轻视的救世主·第二卷 逆潮》原名《黛丽丝魔法笔记·第二卷 逆潮》 | 西方奇幻小说</title>
-  <meta name="description" content="西方奇幻小说《被轻视的救世主·第二卷 逆潮》（原名《黛丽丝魔法笔记·第二卷 逆潮》）——当世界被深渊凝视，被轻视的公主踏上逆潮之路。">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《被看轻的救世主》| 西方奇幻小说</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Serif+SC:wght@300;400;600;700&display=swap');
+
+  :root {
+    --bg0:     #05010f;
+    --bg1:     #140826;
+    --bg2:     #241040;
+    --card:    rgba(38, 18, 66, 0.72);
+    --border:  #4a2a7a;
+    --gold:    #d4af37;
+    --gold2:   #f5e08c;
+    --purple:  #8b5cf6;
+    --purple2: #c4b5fd;
+    --text:    #efe9ff;
+    --muted:   #b9a8d9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Serif SC', 'Songti SC', serif;
+    background: var(--bg0);
+    color: var(--text);
+    line-height: 1.9;
+    overflow-x: hidden;
+  }
+
+  /* ══════════ 导航 ══════════ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(5, 1, 15, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 62px;
+  }
+  nav .logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.15rem; color: var(--gold);
+    letter-spacing: 3px; text-decoration: none;
+    text-shadow: 0 0 18px rgba(212,175,55,0.4);
+  }
+  nav ul { list-style: none; display: flex; gap: 30px; }
+  nav a {
+    color: var(--muted); text-decoration: none; font-size: 0.85rem;
+    letter-spacing: 2px; transition: color .3s;
+  }
+  nav a:hover { color: var(--gold2); }
+
+  /* ══════════ 首页 Hero ══════════ */
+  #home {
+    min-height: 100vh; position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    padding-top: 62px;
+    background:
+      radial-gradient(ellipse 120% 80% at 50% -10%, rgba(139,92,246,0.28) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 80% 100%, rgba(212,175,55,0.10) 0%, transparent 60%),
+      linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 45%, var(--bg2) 100%);
+  }
+
+  /* 星空 */
+  #stars, #stars2 { position: absolute; inset: 0; pointer-events: none; }
+  #stars2 { opacity: .6; }
+
+  /* 月亮 */
+  .moon {
+    position: absolute; top: 14%; right: 12%;
+    width: 150px; height: 150px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fdf6d8, #e8d48a 55%, #c9a94f);
+    box-shadow: 0 0 60px 25px rgba(232,212,138,0.35), 0 0 160px 60px rgba(232,212,138,0.12);
+    pointer-events: none;
+  }
+  .moon::after {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    background:
+      radial-gradient(circle at 60% 40%, transparent 58%, rgba(120,90,30,0.25) 59%, transparent 62%),
+      radial-gradient(circle at 40% 65%, transparent 55%, rgba(120,90,30,0.20) 56%, transparent 60%);
+  }
+
+  /* 山峦剪影 */
+  .mountains { position: absolute; bottom: 0; left: 0; width: 100%; pointer-events: none; line-height: 0; }
+  .mountains svg { width: 100%; height: auto; display: block; }
+
+  /* 雾气 */
+  .fog {
+    position: absolute; bottom: 0; left: -50%; width: 200%; height: 40%;
+    background: linear-gradient(180deg, transparent, rgba(139,92,246,0.12) 60%, rgba(139,92,246,0.22));
+    filter: blur(18px);
+    animation: fogmove 26s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes fogmove { from { transform: translateX(0); } to { transform: translateX(6%); } }
+
+  /* 魔法尘埃粒子 */
+  .dust {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, var(--gold2), rgba(212,175,55,0));
+    animation: rise linear infinite; pointer-events: none;
+  }
+  @keyframes rise {
+    0%   { transform: translateY(0) scale(0); opacity: 0; }
+    15%  { opacity: .9; }
+    100% { transform: translateY(-90vh) scale(1.4); opacity: 0; }
+  }
+
+  .hero-inner { position: relative; z-index: 5; padding: 0 24px; max-width: 900px; }
+
+  .hero-kicker {
+    font-family: 'Cinzel', serif; font-size: 0.85rem;
+    color: var(--purple2); letter-spacing: 10px;
+    margin-bottom: 26px;
+  }
+  .hero-title {
+    font-family: 'Cinzel', 'Noto Serif SC', serif;
+    font-size: clamp(2.6rem, 6.5vw, 5rem);
+    color: var(--gold2);
+    line-height: 1.25; margin-bottom: 22px;
+    text-shadow: 0 0 40px rgba(212,175,55,0.45), 0 4px 30px rgba(0,0,0,0.6);
+    letter-spacing: 6px;
+  }
+  .hero-title .small {
+    display: block; font-size: 0.42em; letter-spacing: 14px;
+    color: var(--purple2); margin-top: 10px;
+    text-shadow: 0 0 24px rgba(139,92,246,0.6);
+  }
+  .hero-tagline {
+    max-width: 620px; margin: 0 auto 44px;
+    font-size: 1.05rem; color: var(--muted); font-weight: 300;
+    line-height: 2.1;
+  }
+  .hero-tagline strong { color: var(--gold); font-weight: 600; }
+  .hero-tagline .quote {
+    display: block; margin-top: 14px; font-size: 0.88rem;
+    color: var(--purple2); font-style: italic;
+  }
+  .hero-tagline .quote::before { content: '「'; color: var(--gold); }
+  .hero-tagline .quote::after  { content: '」'; color: var(--gold); }
+
+  /* 三按钮 */
+  .hero-btns { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 15px 42px;
+    font-family: 'Cinzel', 'Noto Serif SC', serif;
+    font-size: 0.95rem; letter-spacing: 3px; text-decoration: none;
+    color: var(--gold); border: 1px solid var(--gold);
+    background: rgba(212,175,55,0.05);
+    position: relative; overflow: hidden; cursor: pointer;
+    transition: all .4s;
+  }
+  .btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(212,175,55,0), rgba(212,175,55,0.25), rgba(212,175,55,0));
+    transform: translateX(-100%); transition: transform .5s;
+  }
+  .btn:hover::before { transform: translateX(100%); }
+  .btn:hover {
+    color: #1a0b2e; background: var(--gold);
+    box-shadow: 0 0 30px rgba(212,175,55,0.5);
+    transform: translateY(-3px);
+  }
+  .btn span { position: relative; z-index: 1; }
+
+  .scroll-hint {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    color: var(--muted); font-size: 0.72rem; letter-spacing: 4px; z-index: 5;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+  /* ══════════ 通用区块 ══════════ */
+  section { padding: 100px 0; position: relative; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+  .ornament { text-align: center; color: var(--gold); font-size: 1.2rem; letter-spacing: 12px; margin-bottom: 14px; }
+  .section-title {
+    text-align: center; font-family: 'Cinzel', 'Noto Serif SC', serif;
+    font-size: 2rem; color: var(--gold2); letter-spacing: 6px; margin-bottom: 12px;
+    text-shadow: 0 0 30px rgba(212,175,55,0.25);
+  }
+  .section-sub {
+    text-align: center; color: var(--muted); font-size: 0.85rem;
+    letter-spacing: 3px; margin-bottom: 56px;
+  }
+
+  /* ══════════ 小说简介 ══════════ */
+  #intro { background: linear-gradient(180deg, var(--bg1) 0%, var(--bg0) 100%); }
+  .intro-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: start; }
+  .intro-block { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 34px; backdrop-filter: blur(6px); }
+  .intro-block h3 {
+    font-family: 'Cinzel', 'Noto Serif SC', serif; font-size: 1.2rem;
+    color: var(--gold); letter-spacing: 3px; margin-bottom: 18px;
+    padding-bottom: 12px; border-bottom: 1px solid rgba(212,175,55,0.3);
+  }
+  .intro-block p { font-size: 0.92rem; color: var(--muted); line-height: 2.1; font-weight: 300; margin-bottom: 14px; }
+  .intro-block p:first-of-type::first-letter {
+    font-family: 'Cinzel', serif; font-size: 2.6rem; float: left;
+    line-height: 1; margin: 4px 10px 0 0; color: var(--gold);
+  }
+  .intro-block .glow-quote {
+    border-left: 3px solid var(--purple); padding: 14px 18px; margin: 20px 0;
+    background: rgba(139,92,246,0.08); color: var(--text);
+    font-style: italic; font-size: 0.95rem;
+  }
+  .acts { list-style: none; }
+  .acts li {
+    padding: 16px 0; border-bottom: 1px dashed rgba(74,42,122,0.6);
+    font-size: 0.9rem; color: var(--muted); line-height: 1.9;
+  }
+  .acts li:last-child { border-bottom: none; }
+  .acts .act-name {
+    font-family: 'Cinzel', 'Noto Serif SC', serif; color: var(--gold2);
+    font-size: 1rem; letter-spacing: 2px; margin-bottom: 4px;
+  }
+
+  /* ══════════ 主要角色 ══════════ */
+  #characters { background: linear-gradient(180deg, var(--bg0) 0%, var(--bg2) 100%); }
+  .char-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 28px;
+  }
+  .char-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; overflow: hidden;
+    transition: all .35s; position: relative;
+  }
+  .char-card:hover { border-color: var(--gold); transform: translateY(-6px); box-shadow: 0 12px 40px rgba(139,92,246,0.2); }
+  .char-banner {
+    height: 92px; position: relative; display: flex; align-items: center; justify-content: center;
+  }
+  .char-banner .initial {
+    font-family: 'Cinzel', serif; font-size: 3rem; color: rgba(255,255,255,0.9);
+    text-shadow: 0 0 30px rgba(255,255,255,0.5);
+  }
+  .char-body { padding: 22px 26px 28px; }
+  .char-name {
+    font-family: 'Cinzel', 'Noto Serif SC', serif; font-size: 1.35rem;
+    color: var(--gold2); letter-spacing: 2px; margin-bottom: 4px;
+  }
+  .char-title { font-size: 0.78rem; color: var(--purple2); letter-spacing: 2px; margin-bottom: 12px; }
+  .char-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.95; font-weight: 300; }
+  .char-tags { margin-top: 12px; }
+  .char-tag {
+    display: inline-block; margin: 4px 6px 0 0; padding: 2px 12px;
+    border: 1px solid var(--border); border-radius: 20px;
+    font-size: 0.72rem; color: var(--purple2); letter-spacing: 1px;
+  }
+
+  /* ══════════ 立即阅读 ══════════ */
+  #read { background: linear-gradient(180deg, var(--bg2) 0%, var(--bg0) 100%); }
+  .read-layout { display: grid; grid-template-columns: 230px 1fr; gap: 44px; }
+  .read-chapters { position: sticky; top: 80px; align-self: start; }
+  .read-chapters h4 {
+    font-family: 'Cinzel', 'Noto Serif SC', serif; font-size: 1rem;
+    color: var(--gold); letter-spacing: 3px; margin-bottom: 16px;
+  }
+  .read-chapters ol { list-style: none; }
+  .read-chapters li {
+    padding: 11px 14px; cursor: pointer; font-size: 0.85rem;
+    color: var(--muted); border-left: 2px solid transparent;
+    transition: all .3s; line-height: 1.7;
+  }
+  .read-chapters li:hover, .read-chapters li.active {
+    color: var(--gold2); border-left-color: var(--gold);
+    background: rgba(212,175,55,0.07);
+  }
+  .chapter-head { border-bottom: 1px solid var(--border); padding-bottom: 22px; margin-bottom: 26px; }
+  .chapter-head h3 {
+    font-family: 'Cinzel', 'Noto Serif SC', serif; font-size: 1.55rem;
+    color: var(--gold2); letter-spacing: 2px; margin-bottom: 6px;
+  }
+  .chapter-head .meta { font-size: 0.78rem; color: var(--muted); letter-spacing: 2px; }
+  .chapter-body p {
+    font-size: 0.95rem; color: var(--text); line-height: 2.25;
+    margin-bottom: 18px; font-weight: 300; text-align: justify;
+  }
+  .chapter-body .dropcap {
+    font-family: 'Cinzel', serif; font-size: 3rem; float: left;
+    line-height: 1; margin: 2px 12px 0 0; color: var(--gold);
+  }
+  .chapter-body .em-line {
+    color: var(--gold2); background: rgba(212,175,55,0.07);
+    padding: 16px; border-left: 3px solid var(--gold); margin: 22px 0;
+    font-style: normal;
+  }
+  .read-end { text-align: center; margin-top: 46px; color: var(--muted); font-size: 0.85rem; font-style: italic; }
+
+  /* ══════════ 页脚 ══════════ */
+  footer {
+    background: var(--bg0); border-top: 1px solid rgba(212,175,55,0.2);
+    padding: 44px 32px; text-align: center;
+  }
+  footer .f-title {
+    font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--gold);
+    letter-spacing: 4px; margin-bottom: 10px;
+  }
+  footer p { font-size: 0.8rem; color: var(--muted); line-height: 2; }
+  footer .copy { margin-top: 20px; font-size: 0.7rem; color: #554a80; }
+
+  /* ══════════ 响应式 ══════════ */
+  @media (max-width: 800px) {
+    nav { padding: 0 18px; }
+    nav ul { gap: 14px; }
+    nav a { font-size: 0.74rem; }
+    .intro-grid { grid-template-columns: 1fr; }
+    .read-layout { grid-template-columns: 1fr; }
+    .read-chapters { position: static; }
+    .char-grid { grid-template-columns: 1fr 1fr; }
+    .moon { width: 90px; height: 90px; top: 10%; right: 8%; }
+  }
+  @media (max-width: 520px) {
+    .char-grid { grid-template-columns: 1fr; }
+    .hero-btns { flex-direction: column; align-items: center; }
+    .hero-title { letter-spacing: 2px; }
+  }
+</style>
 </head>
 <body>
 
-  <div class="stars"></div>
-  <div class="magic-particles"></div>
+<!-- 导航 -->
+<nav>
+  <a href="#home" class="logo">被看轻的救世主</a>
+  <ul>
+    <li><a href="#intro">小说简介</a></li>
+    <li><a href="#characters">主要角色</a></li>
+    <li><a href="#read">立即阅读</a></li>
+  </ul>
+</nav>
 
-  <div class="page-container">
-    <!-- 顶部导航 -->
-    <nav class="site-nav">
-      <a class="nav-brand" href="index.html">✦ 逆潮 ✦</a>
-      <div class="nav-links">
-        <a href="index.html">首页</a>
-        <a href="intro.html">小说简介</a>
-        <a href="characters.html">主要角色</a>
-        <a href="read.html">立即阅读</a>
-      </div>
-    </nav>
+<!-- ═══════════ 首页 ═══════════ -->
+<section id="home">
+  <div id="stars"></div>
+  <div id="stars2"></div>
+  <div class="moon"></div>
 
-    <!-- Hero 区域 -->
-    <section class="hero">
-      <div class="hero-bg">
-        <img src="images/hero-bg.png" alt="西方奇幻古堡背景图">
-      </div>
+  <div class="mountains">
+    <svg viewBox="0 0 1440 340" preserveAspectRatio="none">
+      <polygon points="0,340 0,220 140,150 260,210 380,130 520,200 640,150 780,230 900,160 1040,210 1180,140 1320,200 1440,170 1440,340" fill="#150a2e"/>
+      <polygon points="0,340 0,260 180,190 330,250 470,180 620,245 760,185 930,255 1080,190 1230,250 1440,210 1440,340" fill="#1d0f3d"/>
+      <polygon points="0,340 0,300 220,240 420,290 600,235 810,295 1000,240 1210,295 1440,260 1440,340" fill="#2a1750"/>
+      <rect x="0" y="300" width="1440" height="40" fill="#2a1750"/>
+    </svg>
+  </div>
+  <div class="fog"></div>
 
-      <div class="hero-ornament">✦ ❖ ✦</div>
-
-      <h1 class="hero-title">被轻视的救世主</h1>
-      <div class="hero-subtitle">原名《黛丽丝魔法笔记 · 第二卷 逆潮》</div>
-
-      <p class="hero-tagline">
-        「她生而无魔力，却听见万物的低语；<br>
-        世界被深渊凝视，她选择逆着浪潮前行。<br>
-        他们轻视她，直到她成为最后的救世主。」
-      </p>
-
-      <div class="hero-divider"><span>❖</span></div>
-
-      <div class="btn-group">
-        <a class="btn" href="intro.html">小说简介</a>
-        <a class="btn btn-gold" href="characters.html">主要角色</a>
-        <a class="btn" href="read.html">立即阅读</a>
-      </div>
-    </section>
-
-    <footer class="site-footer">
-      <div class="footer-ornament">✦ ❖ ✦</div>
-      <div>《被轻视的救世主·第二卷 逆潮》原名《黛丽丝魔法笔记 · 第二卷 逆潮》</div>
-      <div style="margin-top:6px;">深渊在凝视 · 逆潮已起</div>
-    </footer>
+  <div class="hero-inner">
+    <div class="hero-kicker">A WESTERN FANTASY NOVEL</div>
+    <h1 class="hero-title">
+      《被看轻的救世主》
+      <span class="small">THE UNDERESTIMATED SAVIOR</span>
+    </h1>
+    <div class="hero-tagline">
+      测试石说她生而无魔力，整个帝国都等着她死——<br>
+      可深渊里的东西，<strong>怕的正是她</strong>。
+      <span class="quote">测试石从不说谎。只是解读它的人，从未看全。</span>
+    </div>
+    <div class="hero-btns">
+      <a class="btn" href="#intro"><span>小说简介</span></a>
+      <a class="btn" href="#characters"><span>主要角色</span></a>
+      <a class="btn" href="#read"><span>立即阅读</span></a>
+    </div>
   </div>
 
-  <script src="js/main.js"></script>
+  <div class="scroll-hint">▼ SCROLL</div>
+</section>
+
+<!-- ═══════════ 小说简介 ═══════════ -->
+<section id="intro">
+  <div class="wrap">
+    <div class="ornament">✦ ❖ ✦</div>
+    <h2 class="section-title">小说简介</h2>
+    <div class="section-sub">SYNOPSIS · 献祭非死，乃换位</div>
+
+    <div class="intro-grid">
+      <div class="intro-block">
+        <h3>世界起源</h3>
+        <p>有一方宇宙，星辰散乱，暗淡无光。伟大的元始神诞生，使星云汇聚，日月灿烂，万物生生不息。然而在光明驱散黑暗的前夜，掌管深渊的领主哈瑞塔睁开漆黑的眼睛——那一眼，使世界一步一步跌落深渊。</p>
+        <p>在彻底沦陷的紧要关头，元始神流下一滴眼泪，献祭自身，将深渊魔神封印。神明们建起新世界后沉沉睡去，只留下一个预言：在世界陷入黑暗时，祂们将苏醒，再次击败黑暗后裔。</p>
+        <p>可和平之下，灭世的危机从未消失。当终结问题来临之际，黑暗后裔出动了——我们的故事，就此展开。</p>
+      </div>
+
+      <div class="intro-block">
+        <h3>三幕史诗</h3>
+        <ul class="acts">
+          <li>
+            <div class="act-name">第一幕 · 被看轻的公主</div>
+            世界灾变，女巫宣称需王室血脉献祭方能消弭灾厄。无魔力的黛丽丝，正是那个"祭品"。
+          </li>
+          <li>
+            <div class="act-name">第二幕 · 魔法学院的逆袭</div>
+            女神权杖穿越星空认主，十二响钟声回荡——测试石判定的"无魔力者"，是唯一的选中之人。
+          </li>
+          <li>
+            <div class="act-name">第三幕 · 救世主的代价</div>
+            雪皇后复活，深渊苏醒。她拒绝王位，登船远航——因为她知道，真正的战争才刚刚开始。
+          </li>
+        </ul>
+        <div class="glow-quote">
+          "拯救世界并非唯有献祭——我更相信人的力量。"
+          <div style="text-align:right; font-size:0.78rem; color:var(--purple2); margin-top:6px;">—— 黛丽丝公主</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 主要角色 ═══════════ -->
+<section id="characters">
+  <div class="wrap">
+    <div class="ornament">✦ ❖ ✦</div>
+    <h2 class="section-title">主要角色</h2>
+    <div class="section-sub">CHARACTERS · 被看轻的人，往往是真正的重量级</div>
+
+    <div class="char-grid">
+
+      <div class="char-card">
+        <div class="char-banner" style="background:linear-gradient(135deg,#2a1050,#4b1a7a,#2a1050);">
+          <span class="initial">D</span>
+        </div>
+        <div class="char-body">
+          <div class="char-name">黛丽丝</div>
+          <div class="char-title">莱茵帝国公主 · 无魔力者 · 救世主</div>
+          <div class="char-desc">金发如熔金，剑术无双。七岁那年测试石说她生而无魔力，整个宫廷为之沉默。可无人留意，测试石背面曾闪过一瞬微光——那是封印锁芯的信号。她从那天起能听懂每一只鸟的话，而她，是唯一能封印深渊领主的人。</div>
+          <div class="char-tags">
+            <span class="char-tag">剑术天才</span>
+            <span class="char-tag">鸟语异能</span>
+            <span class="char-tag">封印锁芯</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="char-card">
+        <div class="char-banner" style="background:linear-gradient(135deg,#101c3a,#1e3a6e,#101c3a);">
+          <span class="initial">R</span>
+        </div>
+        <div class="char-body">
+          <div class="char-name">瑞肯</div>
+          <div class="char-title">穿铠猫头鹰 · 忠诚伙伴</div>
+          <div class="char-desc">一只穿铠甲的猫头鹰，铜喙如刀，夜巡都城时目击了妖娈掏心的血腥一幕——那是深渊渗入人间的第一个信号。从此它成为黛丽丝最忠诚的战友，也是整个故事的叙事之眼。</div>
+          <div class="char-tags">
+            <span class="char-tag">铠甲护体</span>
+            <span class="char-tag">侦察兵</span>
+            <span class="char-tag">吐槽担当</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="char-card">
+        <div class="char-banner" style="background:linear-gradient(135deg,#0f2130,#1c4460,#0f2130);">
+          <span class="initial">P</span>
+        </div>
+        <div class="char-body">
+          <div class="char-name">帕丁博士</div>
+          <div class="char-title">格林沃魔法学院导师 · 引路人</div>
+          <div class="char-desc">外表刻薄冷漠，内心温热如火。她第一个看穿黛丽丝的秘密："测试石测不出你体内的力量——因为有一道古老的封印，将你的魔力封在了血脉深处。"她是黛丽丝的导师，也是唯一相信她的人。</div>
+          <div class="char-tags">
+            <span class="char-tag">严厉导师</span>
+            <span class="char-tag">星脉研究者</span>
+            <span class="char-tag">守护者</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="char-card">
+        <div class="char-banner" style="background:linear-gradient(135deg,#1a0f30,#3a1d60,#1a0f30);">
+          <span class="initial">M</span>
+        </div>
+        <div class="char-body">
+          <div class="char-name">梅瑞塔</div>
+          <div class="char-title">魔法岛校长千金 · 优等生 · 挚友</div>
+          <div class="char-desc">傲慢的天才魔法师，第一个当面挑战黛丽丝的人，也是第一个被折服的人。"朋友是朋友，规矩是规矩。我两样都认。"她用纪律代替温柔，用规则代替示弱——却为黛丽丝破过最大的例。</div>
+          <div class="char-tags">
+            <span class="char-tag">学霸</span>
+            <span class="char-tag">纪律至上</span>
+            <span class="char-tag">护短</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="char-card">
+        <div class="char-banner" style="background:linear-gradient(135deg,#2a0a20,#551040,#2a0a20);">
+          <span class="initial">M</span>
+        </div>
+        <div class="char-body">
+          <div class="char-name">梅斯卡蒂</div>
+          <div class="char-title">魔法岛女巫 · 预言者 · 献祭论者</div>
+          <div class="char-desc">来自魔法岛的预言女巫，一句话可掀起革命，一句话可判处一位公主死刑。她说：需王室血脉献祭，方能消弭灾变。她是全书最大的争议——反派，还是另有真相？</div>
+          <div class="char-tags">
+            <span class="char-tag">预言</span>
+            <span class="char-tag">争议</span>
+            <span class="char-tag">转折者</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="char-card">
+        <div class="char-banner" style="background:linear-gradient(135deg,#0d1524,#1a2a4a,#0d1524);">
+          <span class="initial">L</span>
+        </div>
+        <div class="char-body">
+          <div class="char-name">莱昂纳德</div>
+          <div class="char-title">黑暗精灵后裔 · 神秘同伴</div>
+          <div class="char-desc">拥有黑暗精灵血统的神秘少女，背负无人知晓的过去。她沉默寡言，行事诡异，却在关键时刻一次次出手相救。她的身世是全书最大的谜，也是最深的伏笔。</div>
+          <div class="char-tags">
+            <span class="char-tag">精灵血统</span>
+            <span class="char-tag">神秘</span>
+            <span class="char-tag">沉默守护</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 立即阅读 ═══════════ -->
+<section id="read">
+  <div class="wrap">
+    <div class="ornament">✦ ❖ ✦</div>
+    <h2 class="section-title">立即阅读</h2>
+    <div class="section-sub">EXCERPTS · 故事从这里开始</div>
+
+    <div class="read-layout">
+      <div class="read-chapters">
+        <h4>章节目录</h4>
+        <ol>
+          <li class="active" onclick="switchChapter(this,'c1')">楔子 · 元始献祭</li>
+          <li onclick="switchChapter(this,'c2')">序 · 妖娈之影</li>
+          <li onclick="switchChapter(this,'c3')">危机</li>
+          <li onclick="switchChapter(this,'c4')">历史课</li>
+          <li onclick="switchChapter(this,'c5')"> 朝会</li>
+          <li onclick="switchChapter(this,'c6')">布朗归来</li>
+          <li onclick="switchChapter(this,'c7')">献祭预言</li>
+        </ol>
+      </div>
+
+      <div class="read-content">
+
+        <div id="c1">
+          <div class="chapter-head">
+            <h3>楔子 · 元始献祭</h3>
+            <div class="meta">PROLOGUE · 世界诞生的那一夜</div>
+          </div>
+          <div class="chapter-body">
+            <p><span class="dropcap">有</span>一方宇宙，星辰散乱，四处悬浮，暗淡无光，永恒的沉寂将其笼罩。那是伟大的元始神，祂的诞生使星云汇聚，运行有常，日月灿烂，从此海陆分离，万物生生不息。然而在光明驱散黑暗进入新世界的前夜，掌管黑暗深渊的领主哈瑞塔睁开漆黑的眼睛，投来了凝视。那一眼，使黑暗肆虐，新诞的神明们深陷漩涡，苦苦挣扎，世界一步一步跌落深渊。</p>
+            <p>在彻底沦陷的紧要关头，元始神看着支离破碎的宇宙流下一滴眼泪，献祭自身，将深渊魔神封印。</p>
+            <p>但深渊领主哈瑞塔无边无际，祂是永恒的黑暗，元始神无法彻底消灭祂，封印只是让祂重新陷入沉睡。更糟糕的是，沉睡之人终有苏醒之日，在世界面临终结问题时，封印松动，哈瑞塔将会再次复苏，给整个宇宙带来永恒的暗夜。</p>
+            <p>元始神献祭自身后，幸存的神明与黑暗后裔展开了长达数个纪元的宇宙争夺战。争夺战以黑暗后裔主力被消灭，神明们建立起了新的世界为结束。建设完新世界后，一座座巍峨高耸的神殿在群山之巅拔起。神明们在神殿中沉沉睡去。</p>
+            <p>只留下一个预言——在世界陷入黑暗时，祂们将苏醒，再次击败黑暗后裔。</p>
+          </div>
+        </div>
+
+        <div id="c2" style="display:none;">
+          <div class="chapter-head">
+            <h3>序 · 妖娈之影</h3>
+            <div class="meta">THE PROLOGUE · 瑞肯的夜巡</div>
+          </div>
+          <div class="chapter-body">
+            <p><span class="dropcap">罗</span>克萨帝国都城某夜，世界灾变后期。</p>
+            <p>瑞肯入夜巡视都城，顺便捉几头老鼠充饥。世界总是残酷，但凡活着总要自食其力。瑞肯抱怨一句，启程搜寻今夜的晚餐。它用坚硬的铜喙挠痒痒总抱怨太过尖锐，可用来撕裂老鼠总是前所未有的顺利。好处总不能全占，你总得适应一两样坏事。</p>
+            <p>在遍地都是怪物的地方总要特别小心，胃口好的怪物不介意多点肉食，不管它是人类的还是其他武装到牙齿、体型偏小只能靠老鼠充饥的可怜禽类。占据高处，冷静观察。瑞肯心想，它紧盯街巷，任何的动静都逃不出它的眼睛。寒风吹拂瑞肯的羽毛，它纹丝不动。</p>
+            <p>四周寂静无声，暗夜下并无可疑的危险。瑞肯抓紧时机，朝老鼠掠去，老鼠只觉眼前一黑和危险的天敌急速振翅声，未来得及逃跑便失陷在猫头鹰的爪中。瑞肯飞上屋顶，利爪撕碎老鼠，在屋顶享用晚餐。</p>
+            <p>血腥气吸引远处暗影中的狼人，他分辨出血腥气并非人血，又低头吸食阴影中的猎物。暗处有轻微且模糊的哭泣声。一头狼人在他的领地内发现弱小孩童的哭声，正准备一顿晚餐。</p>
+            <p class="em-line">谁料孩童抬起稚嫩天真的脸，露出狡黠阴森的笑容，化为妖娈，探出足以划开铠甲的利爪，夺取眼前猎物的心脏。</p>
+          </div>
+        </div>
+
+        <div id="c3" style="display:none;">
+          <div class="chapter-head">
+            <h3>第一章 · 危机</h3>
+            <div class="meta">CHAPTER 1 · 无魔力者</div>
+          </div>
+          <div class="chapter-body">
+            <p><span class="dropcap">时</span>间：半年前。世界已经灾变，但至少都城尚未沦陷，世界仍旧在人类手中。但暂时如此，故事始终如此。</p>
+            <p>黛丽丝推开窗，一只灰羽的鸽子落在窗台上，咕咕叫着。</p>
+            <p>"东边的粮仓又着火了，"鸽子说，声音粗粝如老妇，"有人说是天灾，可我看见有人在夜里点火。"</p>
+            <p>黛丽丝的手指停在窗框上。她听懂了——像她从七岁起就能听懂每一只鸟说的话。可宫廷魔法师把测试石贴在她额头的那个下午，石头冷得像冰，一丝光都不曾亮起。</p>
+            <p class="em-line">谁也没留意测试石闪过一瞬微光。</p>
+            <p>"无魔力，"魔法师收起石头，语气里甚至带着怜悯，"您的血脉里没有魔法的痕迹，公主殿下。"</p>
+            <p>测试石遇普通人会显现微光，遇魔法师则显示明亮。测试石遇黛丽丝公主没有响应。测试石从不说谎。</p>
+            <p>父王的脸在那一刻沉下去。她知道那是失望——不是对她，而是对命运。菲特大帝期待一个能用魔法守护帝国的继承人，就像初代菲特大帝那样。</p>
+            <p><em>可她仍然能听懂鸟语。</em></p>
+            <p>鸽子飞走时，她望向迷雾森林的方向。那里升腾着不祥的灰雾。她没有魔法——至少测试石是这么说的。可她有剑术，有勇气，还有从未向任何人透露过的秘密。</p>
+            <p style="text-align:center; color:var(--gold); margin-top:24px;">——这就够了。她会让这些成为守护帝国的力量。</p>
+          </div>
+        </div>
+
+        <div id="c4" style="display:none;">
+          <div class="chapter-head">
+            <h3>历史课</h3>
+            <div class="meta">CHAPTER 1 · 四十年</div>
+          </div>
+          <div class="chapter-body">
+            <p><span class="dropcap">“咱</span>们</p>
+            <p>这块大陆在历史上和平无事的时间加起来仅仅不到四十年。不是灾难就是战争。征服或者战败遭到入侵。当然，战争在某种程度上也是一种灾难。不是吗？"</p>
+            <p>黛丽丝手中的羽毛笔停在了羊皮纸上，比安老师关于"四十年和平"的论调让她陷入了沉思。她望向窗外，边境的阴云仿佛已飘至都城上空，她下意识地握紧了腰间的练习用剑，剑柄的凉意让她打了个激灵。</p>
+            <p>尽管边境战争冲突不断，战争的阴云尚未聚拢在都城上空。作为公主，黛丽丝有使命保卫帝国，如有需要她将亲上战场直面战争。她不怀疑有上战场一展身手的机会，毕竟她所接受的教导都在为此准备。</p>
+            <p>而帝国遭遇另一场危机，比战争更危险。战争意味着打败敌人或者战败而亡。而帝国遭遇的危机来自迷雾森林，来自人们口口相传的恐怖流言，来自占星师和预言家对危机的过分启示。</p>
+            <p>作为与北面相隔的迷雾森林，传言危险悄然蔓延。可以看见的阴寒已经蔓延至港口城市莱茵都，尽管已经四月，天气依旧冷冽如严冬，风中似乎夹杂着雪的味道。伴随严寒而至的土地在开春前播种未见幼苗长出，耕种的百姓已经对今年的收成不报多少预期。</p>
+            <p>黛丽丝决意主动出击，亲自探一探迷雾森林的玄机。</p>
+          </div>
+        </div>
+
+        <div id="c5" style="display:none;">
+          <div class="chapter-head">
+            <h3>朝会</h3>
+            <div class="meta">CHAPTER 1 · 局外人</div>
+          </div>
+          <div class="chapter-body">
+            <p><span class="dropcap">朝</span>会上无休止地讨论如何安置难民和筹粮的事宜，黛丽丝猛地从椅子上站起来，椅子腿在大理石地面上刮出刺耳的声响。</p>
+            <p>"父王，请允许我带领一支小队去迷雾森林！"她的声音因激动而微微颤抖。</p>
+            <p>然而，菲特大帝只是疲惫地挥了挥手，连看都没看她一眼，继续与大臣们商议粮价。</p>
+            <p>黛丽丝张了张嘴，最终什么也没说，只是默默地攥紧了拳头，指甲深深地嵌进掌心。那一刻，她感觉自己像个局外人，身体里沸腾的血液正一点点冷却。</p>
+            <p>可随着传言越来越严重，黛丽丝越是跃跃欲试。</p>
+            <p style="text-align:center; color:var(--gold);">"战争呼唤英雄。帝国需要守护。"</p>
+            <p>每当夜晚降临，她独自面对镜子，常常怀疑自己配不配做公主。父王只允许女儿旁听朝会，却未允许她参与。可她一有机会就打听消息。侍女曼妮雅提到来自魔法岛的女巫梅斯卡蒂似乎时常与皇帝陛下密谈。她听闻魔法岛的巫师施法是以消耗自身的生命真元为代价。</p>
+            <p class="em-line">测试石从不说谎——至少魔法师们是这么宣称的。那么，她自小能听懂鸟语，又该如何解释？</p>
+            <p>她把这些疑惑压在心底，仍然对以守护九界魔法宇宙为使命的魔法岛抱有期待，期待魔法岛解决迷雾森林的灾变问题，又不愿无所作为。</p>
+          </div>
+        </div>
+
+        <div id="c6" style="display:none;">
+          <div class="chapter-head">
+            <h3>布朗归来</h3>
+            <div class="meta">CHAPTER 1 · 巨型灰狼</div>
+          </div>
+          <div class="chapter-body">
+            <p><span class="dropcap">在</span>等待两个星期多一天，都城终于迎来了一位名声远扬的勇敢骑士。全城人民都在等待强者挽救危机，随着布朗爵士入城而倍受鼓舞。因为他带来一样礼物——马车上放着占满空当的巨大灰狼。</p>
+            <p>人若战胜野兽，必然战胜自然。如果严寒不过春天偶尔的迟到，那么占星师和预言家做出的结论便不戳自破。</p>
+            <p>今天注定是不平静的一天，而黛丽丝公主如往常一样与御林铁卫蓝博莱尔德比拼剑术。黛丽丝有头耀眼的金发，那是她值得夸耀的上帝赐予的三样财富之一。两名骑士，剑与剑交锋。动作优美，攻与守的动作毫无赘余。</p>
+            <p>曼妮雅略带怀疑，犹豫着，显然担心接下来的回答会受到黛丽丝的取笑。她对上黛丽丝公主闻讯的目光，咬牙不得不说："护林官带来一名发疯的农夫，并一头灰狼。那头狼简直跟一辆马车差不多大。"</p>
+            <p>"那头狼是死是活，"黛丽丝饶有兴致地说，"布朗骑士真是变着花样惹人注目啊！"</p>
+            <p>布朗露出微笑回抱她，"哦，我的黛丽丝公主，有时间再聊吧。我要跟陛下商量大事。"</p>
+            <p>"布朗叔叔，迷雾森林有异变，我敢担保。"布朗恳切地说。</p>
+          </div>
+        </div>
+
+        <div id="c7" style="display:none;">
+          <div class="chapter-head">
+            <h3>献祭预言</h3>
+            <div class="meta">CHAPTER 1 · 帝国的选择</div>
+          </div>
+          <div class="chapter-body">
+            <p><span class="dropcap">女</span>巫毫不掩饰她对迦丽继承人威廉的鄙夷。梅斯卡蒂的陈述简洁而恐怖：需王室血脉献祭，方能消弭迷雾森林的灾变。</p>
+            <p>朝堂之上，威严的帝王沉默。新王后玛丽亚有孕，动摇了黛丽丝的继承顺位。如果王后产下男婴……献祭公主，似乎是代价最小的选择。</p>
+            <p class="em-line">玛丽亚渴望听到黛丽丝公主说"她愿意"，可黛丽丝公主接下来的话令她失望。</p>
+            <p>黛丽丝从未违逆父王，尤其是商讨帝国事务的档口。她失望地走出大厅。</p>
+            <p style="text-align:center; color:var(--gold);">哼，反正我悄悄出宫，跟着布朗叔叔，神不知鬼不觉。</p>
+            <p>第五次游行爆发。全城高喊：杀死灾星。</p>
+            <p>没有人知道，那个被判定为"无魔力"的公主，即将改写整个世界的命运。</p>
+            <p style="text-align:center; color:var(--muted); margin-top:24px; font-style:italic;">—— 故事，才刚刚开始 ——</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="read-end">✦ 更多章节，敬请期待完整作品 ✦</div>
+  </div>
+</section>
+
+<!-- ═══════════ 页脚 ═══════════ -->
+<footer>
+  <div class="f-title">被看轻的救世主</div>
+  <p>原名《黛丽丝魔法笔记》 · 西方奇幻长篇小说</p>
+  <p style="margin-top:6px; font-size:0.85rem; color:var(--purple2);">
+    献给每一个曾经被看轻，却从未放弃的人。
+  </p>
+  <div class="copy">© 2026 被看轻的救世主 · 保留所有权利</div>
+</footer>
+
+<script>
+// ── 星空生成 ──
+(function(){
+  function makeStars(containerId, count, baseSize) {
+    const c = document.getElementById(containerId);
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement('div');
+      const sz = Math.random() * baseSize + 1;
+      s.style.cssText = [
+        'position:absolute',
+        'width:' + sz + 'px',
+        'height:' + sz + 'px',
+        'left:' + Math.random() * 100 + '%',
+        'top:' + Math.random() * 70 + '%',
+        'background:' + (Math.random() > 0.7 ? '#f5e08c' : '#ffffff'),
+        'border-radius:50%',
+        'opacity:' + (Math.random() * 0.7 + 0.2),
+        'box-shadow:0 0 ' + (sz * 3) + 'px rgba(255,255,255,0.5)'
+      ].join(';');
+      c.appendChild(s);
+    }
+  }
+  makeStars('stars', 130, 2.2);
+  makeStars('stars2', 70, 1.2);
+
+  // ── 魔法尘埃 ──
+  for (let i = 0; i < 22; i++) {
+    const d = document.createElement('div');
+    d.className = 'dust';
+    const sz = Math.random() * 3 + 1.5;
+    d.style.cssText = [
+      'width:' + sz + 'px',
+      'height:' + sz + 'px',
+      'left:' + Math.random() * 100 + '%',
+      'bottom:-20px',
+      'animation-duration:' + (Math.random() * 14 + 9) + 's',
+      'animation-delay:' + (Math.random() * 12) + 's'
+    ].join(';');
+    document.getElementById('home').appendChild(d);
+  }
+})();
+
+// ── 试读章节切换 ──
+function switchChapter(btn, id) {
+  document.querySelectorAll('.read-chapters li').forEach(l => l.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.read-content > div').forEach(d => d.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+  window.scrollTo({ top: document.getElementById('read').offsetTop - 60, behavior: 'smooth' });
+}
+
+// ── 导航高亮 ──
+(function(){
+  const links = document.querySelectorAll('nav ul a');
+  const secs = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', function(){
+    let cur = '';
+    secs.forEach(s => { if (s.getBoundingClientRect().top <= 90) cur = s.id; });
+    links.forEach(a => {
+      a.style.color = (a.getAttribute('href') === '#' + cur) ? 'var(--gold2)' : '';
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
