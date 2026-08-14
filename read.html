@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>立即阅读 | 《被轻视的救世主·第二卷 逆潮》原名《黛丽丝魔法笔记·第二卷 逆潮》</title>
+  <meta name="description" content="在线阅读《被轻视的救世主·第二卷 逆潮》（原名《黛丽丝魔法笔记·第二卷 逆潮》）全文。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="read-progress"></div>
+  <div class="stars"></div>
+  <div class="magic-particles"></div>
+
+  <div class="page-container">
+    <nav class="site-nav">
+      <a class="nav-brand" href="index.html">✦ 逆潮 ✦</a>
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a href="intro.html">小说简介</a>
+        <a href="characters.html">主要角色</a>
+        <a href="read.html">立即阅读</a>
+      </div>
+    </nav>
+
+    <header class="page-header">
+      <div class="hero-ornament">✦ ❖ ✦</div>
+      <h1 class="page-title">立即阅读</h1>
+      <div class="page-subtitle">READ NOW · 逆潮已起</div>
+    </header>
+
+    <!-- 阅读工具条 -->
+    <section class="reader-toolbar">
+      <div class="vol-switch" id="vol-switch">
+        <!-- JS 动态生成卷切换按钮 -->
+      </div>
+      <div class="font-controls">
+        <button id="font-decrease" title="缩小字号">A−</button>
+        <button id="font-increase" title="放大字号">A+</button>
+      </div>
+    </section>
+
+    <!-- 章节导航 -->
+    <section class="chapter-nav" id="chapter-nav">
+      <!-- JS 动态生成 -->
+    </section>
+
+    <!-- 阅读正文 -->
+    <section class="reader-panel" id="reader-panel">
+      <div class="vol-title" id="reader-vol-title"></div>
+      <h2 class="chapter-title" id="reader-chapter-title"></h2>
+      <div id="reader-content"><!-- 段落由 JS 渲染 --></div>
+
+      <!-- 翻页导航 -->
+      <div class="reader-pager">
+        <button class="btn btn-pager" id="prev-chapter">◀ 上一章</button>
+        <button class="btn btn-gold btn-pager" id="next-chapter">下一章 ▶</button>
+      </div>
+    </section>
+
+    <div class="reader-tip" style="margin: 30px 0;">
+      ✦ 内容自动保存阅读记忆 · 使用浏览器打开本页即可在线阅读 ✦
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-ornament">✦ ❖ ✦</div>
+      <div>《被轻视的救世主·第二卷 逆潮》原名《黛丽丝魔法笔记 · 第二卷 逆潮》</div>
+      <div style="margin-top:6px;">深渊在凝视 · 逆潮已起</div>
+    </footer>
+  </div>
+
+  <!-- 章节数据：先加载内嵌数据（兼容 file:// 双击打开），再加载主脚本 -->
+  <script src="data/chapters.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
